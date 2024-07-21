@@ -1,6 +1,7 @@
 <script>
     export let chosenBook
-
+	export let animationEnded
+	export let bookHasBeenRead
 </script>
 
 <style>
@@ -34,7 +35,10 @@
 	}
 </style>
 
-<h2>
+<h2 class="animate__animated"
+	class:animate__tada={animationEnded}
+	class:animate__backOutDown={bookHasBeenRead}>
+	
     <span>{chosenBook.title}</span>
 
     {#if chosenBook.page}

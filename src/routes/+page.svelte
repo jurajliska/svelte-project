@@ -19,11 +19,13 @@
 
     //vars
     let waving = true
+    let animationEnded = false
+    let bookHasBeenRead = false
     let books = booky
 
     function gunAudio(){
-        const gunAudio = document.querySelector("audio")
-        gunAudio.play()
+        const audio = document.querySelector("audio")
+        audio.play()
     }
     
     //countdown
@@ -35,17 +37,20 @@
     //randomize (choose random book)
     const chooseBook = () => {
         shuffleArray(books)
+        animationEnded = false
+        bookHasBeenRead = false
 
         let index = $progress === 0 ? books.length -1 : 0
 
         progress.set(index).then(() => {
+            animationEnded = true
             gunAudio()
         })
     }
 
     //Move book from unread to read
     const readBook = () => {
-        alert("readedbook")
+        bookHasBeenRead = true
     }
 
     $: chosenBook = books[Math.floor($progress)] || books[0]
@@ -62,7 +67,6 @@
 
 <header>
     <h1>HEMINGWAYOVÁTOR-ROTÁTOR</h1>
-    <audio src={audio}></audio>
 
     <label for="waving">
         <input type="checkbox" id="waving" bind:checked={waving}>
@@ -71,7 +75,8 @@
 </header>
 
 <main>
-    <TheBook {chosenBook} />
+    <TheBook {chosenBook} {animationEnded} {bookHasBeenRead} />
+    <audio src={audio}></audio>
 
     <section class="controls">
         <img on:click={chooseBook} src={gun} alt="cool ass gun">

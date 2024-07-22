@@ -14,14 +14,29 @@
     import anchor from "../assets/anchor.png"
     import audio from "../assets/dsshotgn.wav"
 
-    import booky from "../books.js";
+    import books from "../books.js";
+
+    //localStorage
+    // Storage.prototype.setStuff = function (key, value) {
+    //     this.setItem(key, JSON.stringify(value))
+    // }
+
+    // Storage.prototype.getStuff = function (key) {
+    //     var value = this.getItem(key)
+    //     return value && JSON.parse(value)
+    // }
+
+    // if( !localStorage.getStuff("unreadBooks") ){
+    //     localStorage.setStuff("unreadBooks", books)
+    //     localStorage.setStuff("readBooks", [])
+    // }
 
 
     //vars
     let waving = true
     let animationEnded = false
     let bookHasBeenRead = false
-    let books = booky
+    //let booky = books
 
     function gunAudio(){
         const audio = document.querySelector("audio")

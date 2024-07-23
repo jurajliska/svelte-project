@@ -7,7 +7,12 @@
     import { tweened } from "svelte/motion";
 	import { cubicOut, circOut } from "svelte/easing";
     import { shuffleArray } from "../functions.js"
- 
+    //import { books } from "../lib/index.js"
+
+    import { browser } from "$app/environment"
+    import { writable } from "svelte/store" 
+
+
     //images
     import hem from "../assets/hemingway.png";
     import gun from "../assets/gun.png";
@@ -30,6 +35,27 @@
     //     localStorage.setStuff("unreadBooks", books)
     //     localStorage.setStuff("readBooks", [])
     // }
+
+    let cat    
+
+    if (browser){
+        window.localStorage.setItem("myCato", "Tomas");
+        cat = localStorage.getItem("myCat");
+    }
+    
+
+    const defaultValue = 'summer';
+    const initialValue = browser ? window.localStorage.getItem('theme') ?? defaultValue : defaultValue;
+    const theme = writable(initialValue);
+
+    theme.subscribe((value) => {
+        if (browser) {
+            window.localStorage.setItem('theme', value);
+        }
+    });
+
+
+
 
 
     //vars
@@ -92,6 +118,8 @@
 <main>
     <TheBook {chosenBook} {animationEnded} {bookHasBeenRead} />
     <audio src={audio}></audio>
+
+    <h2>{cat}</h2>
 
     <section class="controls">
         <img on:click={chooseBook} src={gun} alt="cool ass gun">

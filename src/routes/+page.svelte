@@ -7,11 +7,7 @@
     import { tweened } from "svelte/motion";
 	import { cubicOut, circOut } from "svelte/easing";
     import { shuffleArray } from "../functions.js"
-    //import { books } from "../lib/index.js"
-
     import { browser } from "$app/environment"
-    import { writable } from "svelte/store" 
-
 
     //images
     import hem from "../assets/hemingway.png";
@@ -23,7 +19,7 @@
 
     //localStorage
     // Storage.prototype.setStuff = function (key, value) {
-    //     this.setItem(key, JSON.stringify(value))
+    //       this.setItem(key, JSON.stringify(value))
     // }
 
     // Storage.prototype.getStuff = function (key) {
@@ -36,33 +32,12 @@
     //     localStorage.setStuff("readBooks", [])
     // }
 
-    let cat    
-
-    if (browser){
-        window.localStorage.setItem("myCato", "Tomas");
-        cat = localStorage.getItem("myCat");
-    }
-    
-
-    const defaultValue = 'summer';
-    const initialValue = browser ? window.localStorage.getItem('theme') ?? defaultValue : defaultValue;
-    const theme = writable(initialValue);
-
-    theme.subscribe((value) => {
-        if (browser) {
-            window.localStorage.setItem('theme', value);
-        }
-    });
-
-
-
-
+    localStorage.setItem("necitane", JSON.stringify(books))
 
     //vars
     let waving = true
     let animationEnded = false
     let bookHasBeenRead = false
-    //let booky = books
 
     function gunAudio(){
         const audio = document.querySelector("audio")
@@ -109,6 +84,7 @@
 <header>
     <h1>HEMINGWAYOVÁTOR-ROTÁTOR</h1>
 
+
     <label for="waving">
         <input type="checkbox" id="waving" bind:checked={waving}>
         waving
@@ -118,8 +94,6 @@
 <main>
     <TheBook {chosenBook} {animationEnded} {bookHasBeenRead} />
     <audio src={audio}></audio>
-
-    <h2>{cat}</h2>
 
     <section class="controls">
         <img on:click={chooseBook} src={gun} alt="cool ass gun">

@@ -7,7 +7,6 @@
     import { tweened } from "svelte/motion";
 	import { cubicOut, circOut } from "svelte/easing";
     import { shuffleArray } from "../functions.js"
-    import { browser } from "$app/environment"
 
     //images
     import hem from "../assets/hemingway.png";
@@ -18,23 +17,23 @@
     import books from "../books.js";
 
     //localStorage
-    // Storage.prototype.setStuff = function (key, value) {
-    //       this.setItem(key, JSON.stringify(value))
-    // }
+    Storage.prototype.setStuff = function (key, value) {
+          this.setItem(key, JSON.stringify(value))
+    }
 
-    // Storage.prototype.getStuff = function (key) {
-    //     var value = this.getItem(key)
-    //     return value && JSON.parse(value)
-    // }
+    Storage.prototype.getStuff = function (key) {
+        var value = this.getItem(key)
+        return value && JSON.parse(value)
+    }
 
-    // if( !localStorage.getStuff("unreadBooks") ){
-    //     localStorage.setStuff("unreadBooks", books)
-    //     localStorage.setStuff("readBooks", [])
-    // }
-
-    localStorage.setItem("necitane", JSON.stringify(books))
+    if( !localStorage.getStuff("unreadBooks") ){
+        localStorage.setStuff("unreadBooks", books)
+        localStorage.setStuff("readBooks", [])
+    }
+    //localStorage.clear()
 
     //vars
+    let localBooks = localStorage.getStuff("unreadBooks")
     let waving = true
     let animationEnded = false
     let bookHasBeenRead = false
@@ -52,11 +51,15 @@
 
     //randomize (choose random book)
     const chooseBook = () => {
-        shuffleArray(books)
+        localBooks = localStorage.getStuff("unreadBooks")
+        shuffleArray(localBooks)
+
+        console.log(localBooks)
+
         animationEnded = false
         bookHasBeenRead = false
 
-        let index = $progress === 0 ? books.length -1 : 0
+        let index = $progress === 0 ? localBooks.length -1 : 0
 
         progress.set(index).then(() => {
             animationEnded = true
@@ -66,10 +69,19 @@
 
     //Move book from unread to read
     const readBook = () => {
+        let readBooks = localStorage.getStuff("readBooks")
+        let unreadBooks = localStorage.getStuff("unreadBooks")
+
         bookHasBeenRead = true
+
+        readBooks.push(chosenBook)
+        unreadBooks = unreadBooks.filter(item => item.id !== chosenBook.id)
+
+        localStorage.setStuff("readBooks", readBooks)
+        localStorage.setStuff("unreadBooks", unreadBooks)
     }
 
-    $: chosenBook = books[Math.floor($progress)] || books[0]
+    $: chosenBook = localBooks[Math.floor($progress)] || localBooks[0]
 </script>
 
 <style>

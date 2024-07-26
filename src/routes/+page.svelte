@@ -6,7 +6,7 @@
     //imports
     import { tweened } from "svelte/motion";
 	import { cubicOut, circOut } from "svelte/easing";
-    import { shuffleArray } from "../functions.js"
+    import { shuffleArray, gunAudio } from "../functions.js"
 
     //images
     import hem from "../assets/hemingway.png";
@@ -37,11 +37,6 @@
     let waving = true
     let animationEnded = false
     let bookHasBeenRead = false
-
-    function gunAudio(){
-        const audio = document.querySelector("audio")
-        audio.play()
-    }
     
     //countdown
     const progress = tweened(0, {

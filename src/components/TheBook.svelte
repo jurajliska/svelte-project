@@ -6,7 +6,7 @@
 
 <style>
     h2 {
-		color: #ff3e00;
+		color: orange;
 		font-size: 4.5em;
 		font-weight: 100;
 		font-weight: 900;

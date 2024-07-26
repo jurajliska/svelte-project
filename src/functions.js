@@ -5,3 +5,8 @@ export function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]]
     }
 }
+
+export function gunAudio(){
+    const audio = document.querySelector("audio")
+    audio.play()
+}

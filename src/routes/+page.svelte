@@ -49,7 +49,7 @@
         localBooks = localStorage.getStuff("unreadBooks")
         shuffleArray(localBooks)
 
-        console.log(localBooks)
+        //console.log(localBooks)
 
         animationEnded = false
         bookHasBeenRead = false
